@@ -42,7 +42,7 @@ exports.updateProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-exports.getProduct = async (req, res) => {
+exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
