@@ -35,7 +35,7 @@ exports.createUser = async (req, res) => {
     });
     const newUser = dbResponse.toObject();
     delete newUser.password;
-    res.status(200).json(newUser);
+    res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
