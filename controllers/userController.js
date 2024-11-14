@@ -25,7 +25,7 @@ exports.getUserById = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   try {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
@@ -34,6 +34,7 @@ exports.createUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role: role ? role : "comprador",
     });
     const newUser = dbResponse.toObject();
     delete newUser.password;
