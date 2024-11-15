@@ -26,6 +26,18 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
+
+  const userExists = await User.findOne({ name: name });
+  if (userExists)
+    return res
+      .status(400)
+      .json({ message: "Usuario ya se encuentra registrado" });
+
+  const emailExists = await User.findOne({ email: email });
+  if (emailExists)
+    return res
+      .status(400)
+      .json({ message: "Email ya se encuentra registrado" });
   try {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
