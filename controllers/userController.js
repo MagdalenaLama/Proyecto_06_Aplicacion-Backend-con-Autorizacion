@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -53,6 +54,63 @@ exports.createUser = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ msg: error.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const foundUser = await User.findOne({ email });
+
+    if (!foundUser) {
+      return res.status(400).json({
+        msg: "El usuario o la contraseña son incorrectos.",
+      });
+    }
+
+    const verifiedPass = await bcryptjs.compare(password, foundUser.password);
+
+    if (!verifiedPass) {
+      return await res.status(400).json({
+        msg: "El usuario o la contraseña no coinciden.",
+      });
+    }
+
+    const payload = {
+      user: {
+        id: foundUser.id,
+        role: foundUser.role,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      process.env.SECRET,
+      {
+        expiresIn: 360000,
+      },
+      (error, token) => {
+        if (error) throw error;
+
+        res.json({
+          msg: "Inicio de sesión exitoso.",
+          token,
+          user: {
+            id: foundUser.id,
+            email: foundUser.email,
+            role: foundUser.role,
+          },
+        });
+      }
+    );
+
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Hubo un problema con la autenticación.",
+      data: error,
+    });
   }
 };
 
