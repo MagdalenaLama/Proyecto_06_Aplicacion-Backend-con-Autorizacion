@@ -132,8 +132,10 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
+  const userIdFromToken = req.user.user.id;
+
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const user = await User.findByIdAndUpdate(req.user.user.id, req.body, {
       new: true,
     }).select("-password");
     if (!user) {

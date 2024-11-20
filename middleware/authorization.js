@@ -7,6 +7,7 @@ exports.varifyUserToken = (req, res, next) => {
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
     if (err) return res.status(401).json({ message: "Token inválido" });
     req.user = decoded;
+
     next();
   });
 };
@@ -17,6 +18,7 @@ exports.varifyAdminToken = (req, res, next) => {
 
   try {
     const openToken = jwt.verify(token, process.env.SECRET);
+
     if (openToken.user.role !== "admin") {
       return res
         .status(403)

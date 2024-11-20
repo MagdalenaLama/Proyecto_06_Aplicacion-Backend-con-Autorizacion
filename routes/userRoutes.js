@@ -87,7 +87,7 @@ router.post("/register", userController.createUser);
  *               token: "token"
  */
 router.post("/login", userController.login);
-router.put("/:id", auth.varifyAdminToken, userController.updateUser); // en pauta está como /update
+router.put("/update", auth.varifyUserToken, userController.updateUser);
 router.get("/verifytoken", auth.varifyUserToken, userController.verifyToken);
 
 // no incluidas en pauta
