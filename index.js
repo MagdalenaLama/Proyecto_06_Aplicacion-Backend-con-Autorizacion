@@ -6,10 +6,13 @@ const productRoutes = require("./routes/productRoutes");
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const swaggerSetup = require("./swagger");
+const cors = require("cors");
 
 connectDB();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
