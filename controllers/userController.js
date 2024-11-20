@@ -114,6 +114,10 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.verifyToken = (req, res) => {
+  res.status(200).json({ message: "Token válido" });
+};
+
 exports.deleteUser = async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
