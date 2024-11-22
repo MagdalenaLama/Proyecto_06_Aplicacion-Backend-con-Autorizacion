@@ -23,6 +23,11 @@ exports.createOrder = async (req, res) => {
     });
 
     if (nuevaVenta) {
+      await User.findByIdAndUpdate(
+        userIdFromToken,
+        { $push: { orders: nuevaVenta._id } }, // Añadimos la orden al campo 'orders'
+        { new: true }
+      );
       await modificarStockProductos(items);
       res.status(200).json({ message: "Venta exitosa" });
     }
