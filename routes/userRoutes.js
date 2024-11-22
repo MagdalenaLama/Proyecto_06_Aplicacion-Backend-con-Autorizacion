@@ -26,7 +26,6 @@ const auth = require("../middleware/authorization");
  *        name: "Mike"
  *        email: "mike@gmail.com"
  *        password: "password"
- *        orders: []
  *        role: "admin"
  */
 
@@ -71,8 +70,8 @@ router.post("/register", userController.createUser);
  *               password:
  *                 type: string
  *             example:
- *               email: "mike@email.com"
- *               password: "password123"
+ *               email: "mike@gmail.com"
+ *               password: "password"
  *     responses:
  *       200:
  *         description: Inicio de sesión exitoso
@@ -81,10 +80,25 @@ router.post("/register", userController.createUser);
  *             schema:
  *               type: object
  *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: "Inicio de sesión exitoso."
  *                 token:
  *                   type: string
- *             example:
- *               token: "token"
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjczZmNiMGU5MTcxM2QyZjJiNWI4Mzk2Iiwicm9sZSI6ImNvbXByYWRvciJ9LCJpYXQiOjE3MzIyNzYwOTIsImV4cCI6MTczMjYzNjA5Mn0.TSRb5mkd9TZeUgtwJjusi_BO6KNIWdmyVFjTyXXQSGM"
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                      type: string
+ *                      example: "673fcb0e91713d2f2b5b8396"
+ *                     email:
+ *                      type: string
+ *                      example: "usuario@gmail.com"
+ *                     role:
+ *                      type: string
+ *                      example: "comprador"
+ *
  */
 router.post("/login", userController.login);
 router.put("/update", auth.verifyUserToken, userController.updateUser);

@@ -7,7 +7,6 @@ exports.createOrder = async (req, res) => {
   let { items } = req.body;
 
   try {
-    console.log("Datos recibidos en items:", items); // Ver qué se está recibiendo
     if (!userIdFromToken) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
