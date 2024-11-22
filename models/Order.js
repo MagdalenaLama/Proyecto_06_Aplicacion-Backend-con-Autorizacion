@@ -20,6 +20,7 @@ const orderSchema = mongoose.Schema(
         },
       },
     ],
+    status: {},
   },
   { timestamps: true }
 );

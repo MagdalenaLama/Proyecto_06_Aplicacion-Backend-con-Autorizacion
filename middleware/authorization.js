@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-exports.varifyUserToken = (req, res, next) => {
+exports.verifyUserToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) return res.status(403).json({ message: "Token requerido" });
 
@@ -12,7 +12,7 @@ exports.varifyUserToken = (req, res, next) => {
   });
 };
 
-exports.varifyAdminToken = (req, res, next) => {
+exports.verifyAdminToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) return res.status(403).json({ message: "Token requerido" });
 
@@ -30,4 +30,12 @@ exports.varifyAdminToken = (req, res, next) => {
       msg: "Hubo un error con el token.",
     });
   }
+};
+
+exports.verifyVenta = (req, res, next) => {
+  const { estado } = req.query;
+  if (estado !== "completado") {
+    return res.status(401).json({ message: "No se pudo realizar la venta" });
+  }
+  next();
 };
