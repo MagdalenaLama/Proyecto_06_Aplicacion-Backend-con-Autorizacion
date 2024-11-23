@@ -34,7 +34,7 @@ const auth = require("../middleware/authorization");
  *     summary: Crear un nuevo producto si es que se envía un token con rol de admin
  *     tags: [Products]
  *     security:
- *       - BearerAuth: []
+ *       - ApiKeyAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -51,6 +51,19 @@ const auth = require("../middleware/authorization");
  */
 
 router.post("/", auth.verifyAdminToken, productController.createProduct);
+
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Todos los usuarios pueden ver la lista de productos
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Lista de productos
+ *       500:
+ *         description: Error en el servidor al enviar la repsuesta
+ */
 router.get("/", productController.getProducts);
 router.get("/:id", productController.getProductById);
 router.put("/:id", auth.verifyAdminToken, productController.updateProduct);
