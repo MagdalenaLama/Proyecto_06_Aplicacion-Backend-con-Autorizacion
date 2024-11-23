@@ -6,27 +6,32 @@ const auth = require("../middleware/authorization");
 /**
  * @swagger
  * components:
- *  schemas:
- *    User:
- *      type: object
- *      properties:
- *        name:
- *          type: string
- *        email:
- *          type: string
- *        password:
- *          type: string
- *        orders:
- *          type: array
- *          items:
- *            type: string
- *        role:
- *          type: string
- *      example:
- *        name: "Mike"
- *        email: "mike@gmail.com"
- *        password: "password"
- *        role: "admin"
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         orders:
+ *           type: array
+ *           items:
+ *             type: string
+ *         role:
+ *           type: string
+ *       example:
+ *         name: "Mike"
+ *         email: "mike@gmail.com"
+ *         password: "password"
+ *         role: "admin"
  */
 
 /**
@@ -101,7 +106,52 @@ router.post("/register", userController.createUser);
  *
  */
 router.post("/login", userController.login);
+
+/**
+ * @swagger
+ * /users/update:
+ *   put:
+ *     summary: Actualizar información del usuario
+ *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Indica que se requiere un token JWT en el encabezado de autorización
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: El usuario se actualizó correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: No autorizado, token inválido o no proporcionado
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error en el servidor
+ */
+
 router.put("/update", auth.verifyUserToken, userController.updateUser);
+
+/**
+ * @swagger
+ * /users/verifytoken:
+ *   get:
+ *     summary: Verificar token de usuario
+ *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Token válido
+ *       401:
+ *         description: Token inválido
+ */
 router.get("/verifytoken", auth.verifyUserToken, userController.verifyToken);
 
 // no incluidas en pauta

@@ -7,7 +7,7 @@ exports.createOrder = async (req, res) => {
   let { items } = req.body;
 
   try {
-    if (!userIdFromToken) {
+     if (!userIdFromToken) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
     items = items.map((item) => ({
