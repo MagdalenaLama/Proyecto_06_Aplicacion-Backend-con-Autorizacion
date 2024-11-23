@@ -65,6 +65,53 @@ router.post("/", auth.verifyAdminToken, productController.createProduct);
  *         description: Error en el servidor al enviar la repsuesta
  */
 router.get("/", productController.getProducts);
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Obtener un producto por ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del producto a buscar
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Producto encontrado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje de error
+ *               example:
+ *                 message: "Producto no encontrado"
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensaje del error
+ *               example:
+ *                 message: "Error en el servidor"
+ */
+
 router.get("/:id", productController.getProductById);
 router.put("/:id", auth.verifyAdminToken, productController.updateProduct);
 router.delete("/:id", auth.verifyAdminToken, productController.deleteProduct);
