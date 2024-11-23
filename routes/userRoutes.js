@@ -7,10 +7,10 @@ const auth = require("../middleware/authorization");
  * @swagger
  * components:
  *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *     ApiKeyAuth: # arbitrary name for the security scheme
+ *       type: apiKey
+ *       in: header
+ *       name: Authorization
  *   schemas:
  *     User:
  *       type: object
@@ -114,7 +114,7 @@ router.post("/login", userController.login);
  *     summary: Actualizar información del usuario
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []  # Indica que se requiere un token JWT en el encabezado de autorización
+ *       - ApiKeyAuth: []  # Indica que se requiere un token JWT en el encabezado de autorización
  *     requestBody:
  *       required: true
  *       content:
@@ -145,7 +145,7 @@ router.put("/update", auth.verifyUserToken, userController.updateUser);
  *     summary: Verificar token de usuario
  *     tags: [Users]
  *     security:
- *       - BearerAuth: []
+ *       - ApiKeyAuth: []
  *     responses:
  *       200:
  *         description: Token válido
