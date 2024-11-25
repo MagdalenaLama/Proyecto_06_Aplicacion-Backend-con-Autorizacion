@@ -23,5 +23,5 @@ swaggerSetup(app);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en puerto: ${PORT}`);
-  console.log(`Documentacions en http://localhost:${PORT}/api-docs`);
+  console.log(`Documentacion en http://localhost:${PORT}/api-docs`);
 });
