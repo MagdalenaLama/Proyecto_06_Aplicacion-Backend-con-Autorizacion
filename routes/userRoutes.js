@@ -111,7 +111,7 @@ router.post("/login", userController.login);
  * @swagger
  * /users/update:
  *   put:
- *     summary: Actualizar información del usuario
+ *     summary: Actualizar información del usuario que se encuentra autenticado
  *     tags: [Users]
  *     security:
  *       - ApiKeyAuth: []  # Indica que se requiere un token JWT en el encabezado de autorización

@@ -95,7 +95,7 @@ const auth = require("../middleware/authorization");
  * @swagger
  * /order:
  *   post:
- *     summary: Crear una nueva orden
+ *     summary: Crear una nueva orden para el usuario autenticado
  *     tags: [Orders]
  *     requestBody:
  *       required: true
