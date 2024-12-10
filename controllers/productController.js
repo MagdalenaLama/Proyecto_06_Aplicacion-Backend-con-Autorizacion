@@ -10,9 +10,9 @@ exports.getProducts = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const { name, price, stock } = req.body;
+  const { name, price, stock, img } = req.body;
   try {
-    const newProduct = await Product.create({ name, price, stock });
+    const newProduct = await Product.create({ name, price, stock, img });
     res.status(201).json(newProduct);
   } catch (error) {}
 };
