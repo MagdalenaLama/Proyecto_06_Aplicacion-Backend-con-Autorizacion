@@ -8,6 +8,19 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const swaggerSetup = require("./swagger");
 const cors = require("cors");
+const mercadopago = require("mercadopago");
+const preference = require("mercadopago");
+
+const MercadoPagoConfig = mercadopago.MercadoPagoConfig;
+const Payment = mercadopago.Payment;
+const Preference = mercadopago.Preference;
+
+const client = new MercadoPagoConfig({
+  accessToken:
+    "APP_USR-2721948779614436-121107-fb4767ac169e47e047b51f7747dce258-2151819924",
+});
+
+const payment = new Payment(client);
 
 connectDB();
 
@@ -18,6 +31,37 @@ app.use(cors());
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/order", orderRoutes);
+
+app.post("/create_preference", async (req, res) => {
+  try {
+    console.log("Req", req.body.items);
+    const items = req.body.items.map((item) => ({
+      title: item.title,
+      quantity: Number(item.quantity),
+      unit_price: Number(item.unit_price),
+      currency_id: "CLP",
+    }));
+    console.log(items);
+    const body = {
+      items,
+      back_urls: {
+        success: "https://www.google.com",
+        failure: "https://www.youtube.com",
+        pending: "https://www.gmail.com",
+      },
+    };
+    const preference = new Preference(client);
+    const result = await preference.create({ body });
+    res.json({
+      id: result.id,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: "Error al crear la preferencia",
+    });
+  }
+});
 
 swaggerSetup(app);
 
