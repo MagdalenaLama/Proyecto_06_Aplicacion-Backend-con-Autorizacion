@@ -10,6 +10,7 @@ Este proyecto es una aplicación backend desarrollado en Node.js con caracterís
 - Inicio de sesión con autenticación basada en JWT.
 - Gestión de roles para control de acceso.
 - Protección de rutas.
+- Creación de preferencias de pago mediante la API de Mercado Pago
 - Documentación de la API con Swagger.
 
 ---
@@ -68,6 +69,7 @@ npm install
  MONGODB_URI=mongodb+srv://magdalenalamalyon:s1hOqQfWulpGD9BS@cluster0.gwkmf.mongodb.net/Proyecto6_DB?retryWrites=true&w=majority&appName=Cluster0
 PORT=3001
 SECRET=S_o!ym_uy12_se54c7t_!a
+MERCADO_PAGO_ACCESS_TOKEN=APP_USR-2721948779614436-121107-fb4767ac169e47e047b51f7747dce258-2151819924
 ```
 
 5. Inicia el servidor:

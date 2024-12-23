@@ -16,8 +16,7 @@ const Payment = mercadopago.Payment;
 const Preference = mercadopago.Preference;
 
 const client = new MercadoPagoConfig({
-  accessToken:
-    "APP_USR-2721948779614436-121107-fb4767ac169e47e047b51f7747dce258-2151819924",
+  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
 });
 
 const payment = new Payment(client);
