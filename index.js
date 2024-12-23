@@ -44,10 +44,13 @@ app.post("/create_preference", async (req, res) => {
     const body = {
       items,
       back_urls: {
-        success: "https://www.google.com",
+        success: "https://esterodeloica.netlify.app/",
         failure: "https://www.youtube.com",
         pending: "https://www.gmail.com",
       },
+      auto_return: "approved",
+      notification_url:
+        "https://proyecto-06-aplicacion-backend-con.onrender.com/webhook",
     };
     const preference = new Preference(client);
     const result = await preference.create({ body });
@@ -60,6 +63,10 @@ app.post("/create_preference", async (req, res) => {
       error: "Error al crear la preferencia",
     });
   }
+});
+
+app.post("/webhook", async (req, res) => {
+  console.log("prueba");
 });
 
 swaggerSetup(app);
