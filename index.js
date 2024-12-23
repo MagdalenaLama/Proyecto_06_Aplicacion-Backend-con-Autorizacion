@@ -49,8 +49,6 @@ app.post("/create_preference", async (req, res) => {
         pending: "https://www.gmail.com",
       },
       auto_return: "approved",
-      notification_url:
-        "https://proyecto-06-aplicacion-backend-con.onrender.com/webhook",
     };
     const preference = new Preference(client);
     const result = await preference.create({ body });
@@ -64,50 +62,6 @@ app.post("/create_preference", async (req, res) => {
     });
   }
 });
-
-app.post("/webhook", async (req, res) => {
-  try {
-    const paymentData = req.body;
-    console.log("Notificación recibida:", paymentData);
-
-    if (paymentData.type === "payment") {
-      // Consulta a la API de Mercado Pago para obtener detalles del pago
-      const paymentId = paymentData.data.id;
-      const paymentInfo = await obtenerDetallePago(paymentId);
-
-      if (paymentInfo.status === "approved") {
-        // Actualiza el inventario
-        await actualizarInventario(paymentInfo);
-      }
-    }
-
-    res.sendStatus(200); // Responde con éxito
-  } catch (error) {
-    console.error("Error procesando la notificación:", error);
-    res.sendStatus(500);
-  }
-});
-
-const obtenerDetallePago = async (paymentId) => {
-  // Llama a la API de Mercado Pago para obtener los detalles del pago
-  const axios = require("axios");
-  const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
-  const response = await axios.get(
-    `https://api.mercadopago.com/v1/payments/${paymentId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  return response.data;
-};
-
-const actualizarInventario = async (paymentInfo) => {
-  // Lógica para actualizar el inventario en tu base de datos
-  console.log(`Actualizando inventario para el pago: ${paymentInfo.id}`);
-  // Implementa la lógica según tu base de datos
-};
 
 swaggerSetup(app);
 
